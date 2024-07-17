@@ -1,0 +1,24 @@
+name: Action test
+
+on:
+  push:
+    paths:
+      - '.github/workflows/action-test.yml'
+      - 'action.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  ubuntu:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run test action without publish
+        uses: stack-spot/workflow-github-action-publish-content@main
+        with:
+          client_id: ${{ secrets.CLIENT_ID }}
+          client_key: ${{ secrets.CLIENT_KEY }}
+          realm: ${{ secrets.REALM }}
+          studio: UNPUBLISH_ACTION_TEST
