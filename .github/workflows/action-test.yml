@@ -21,4 +21,5 @@ jobs:
           client_id: ${{ secrets.CLIENT_ID }}
           client_key: ${{ secrets.CLIENT_KEY }}
           realm: ${{ secrets.REALM }}
-          studio: UNPUBLISH_ACTION_TEST
+          workspace: workspace-test
+          command_stk: "--version"
