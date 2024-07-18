@@ -20,7 +20,6 @@ https://docs.stackspot.com/home/account/enterprise/service-credential
           client_id: ${{ secrets.CLIENT_ID }}
           client_key: ${{ secrets.CLIENT_KEY }}
           realm: ${{ secrets.REALM }}
-          workspace: workspace-y
           command_stk: "register app-deploy --version 1.0.0 --env dev --status succcess"
 ```
 

@@ -14,9 +14,6 @@ inputs:
   realm:
     description: Account realm
     required: true
-  workspace:
-    description: Workspace
-    required: true
   command_stk:
     description: Command STK
     required: true
@@ -74,11 +71,6 @@ runs:
         REALM: ${{ inputs.realm }}
       run: |
         $HOME/.stk/bin/stk login --client-id $CLIENT_ID --client-key $CLIENT_KEY --realm $REALM
-
-    - name: Use Workspace
-      shell: bash
-      run: |
-        $HOME/.stk/bin/stk use workspace ${{ inputs.workspace }}
 
     - name: Run Command
       shell: bash
