@@ -26,7 +26,7 @@ runs:
       id: check_cli
       shell: bash
       run: |
-        if [ -f "$HOME/.stk/bin/stk" ] then
+        if [ -f "$HOME/.stk/bin/stk" ]; then
             echo "STK_INSTALLED=true" >> "$GITHUB_ENV"
         else
             echo "STK_INSTALLED=false" >> "$GITHUB_ENV"
@@ -57,7 +57,7 @@ runs:
       id: check_cli2
       shell: bash
       run: |
-        if [ -f "$HOME/.stk/bin/stk" ] then
+        if [ -f "$HOME/.stk/bin/stk" ]; then
             echo "STK_INSTALLED=true" >> "$GITHUB_ENV"
         else
             echo "STK_INSTALLED=false" >> "$GITHUB_ENV"
