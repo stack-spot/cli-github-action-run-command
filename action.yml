@@ -54,6 +54,17 @@ runs:
         sudo dpkg --install /tmp/stk.deb || echo "Installation failed with exit code: $?"
         export PATH=$PATH:$HOME/.stk/bin
 
+    - name: Check if STK CLI Installed
+      id: check_cli
+      shell: bash
+      run: |
+        if command -v stk &> /dev/null
+        then
+            echo "STK_INSTALLED=true" >> "$GITHUB_ENV"
+        else
+            echo "STK_INSTALLED=false" >> "$GITHUB_ENV"
+        fi
+
     - name: Show STK CLI version
       shell: bash
       run: $HOME/.stk/bin/stk --version
