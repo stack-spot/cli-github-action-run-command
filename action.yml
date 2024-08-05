@@ -16,8 +16,8 @@ inputs:
     required: true
   command_stk:
     description: Command STK
-    required: true
-    default: '--version'    
+    required: false
+    default: ''
 
 runs:
   using: "composite"
@@ -26,15 +26,14 @@ runs:
       id: check_cli
       shell: bash
       run: |
-        if command -v stk &> /dev/null
-        then
+        if [ -f "$HOME/.stk/bin/stk" ]; then
             echo "STK_INSTALLED=true" >> "$GITHUB_ENV"
         else
             echo "STK_INSTALLED=false" >> "$GITHUB_ENV"
         fi
 
     - name: Download STK CLI
-      if: steps.output.check_cli.stk_installed == 'false'
+      if: env.STK_INSTALLED == 'false'
       shell: bash
       run: |
         curl \
@@ -48,16 +47,21 @@ runs:
           https://stk.stackspot.com/installer/linux/stk.deb
 
     - name: Install STK CLI
-      if: steps.output.check_cli.stk_installed == 'false'
+      if: env.STK_INSTALLED == 'false'
       shell: bash
       run: |
         sudo dpkg --install /tmp/stk.deb || echo "Installation failed with exit code: $?"
         export PATH=$PATH:$HOME/.stk/bin
 
-    - name: Verify if cli was installed
+    - name: Check if STK CLI Installed
+      id: check_cli2
       shell: bash
       run: |
-        dpkg -l | grep stk
+        if [ -f "$HOME/.stk/bin/stk" ]; then
+            echo "STK_INSTALLED=true" >> "$GITHUB_ENV"
+        else
+            echo "STK_INSTALLED=false" >> "$GITHUB_ENV"
+        fi
 
     - name: Show STK CLI version
       shell: bash
@@ -81,5 +85,5 @@ runs:
       shell: bash    
       if: ${{ failure() }}
       run: |
-        cat $HOME/.stk/logs/*
+        [ -d "$HOME/.stk/logs/" ] && [ "$(ls -A $HOME/.stk/logs/)" ] && cat $HOME/.stk/logs/*
         exit 1
