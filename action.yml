@@ -27,7 +27,7 @@ runs:
       shell: bash
       continue-on-error: true
       run: |
-        if command -v stk &> /dev/null
+        if [ "$(dpkg -l | grep stk)" ]
         then
             echo "STK_INSTALLED=true" >> "$GITHUB_ENV"
         else
