@@ -48,7 +48,7 @@ runs:
           https://stk.stackspot.com/installer/linux/stk.deb
 
     - name: Install STK CLI
-      if: env.STK_INSTALLED == 'true'
+      if: env.STK_INSTALLED == 'false'
       shell: bash
       run: |
         sudo dpkg --install /tmp/stk.deb || echo "Installation failed with exit code: $?"
