@@ -26,6 +26,7 @@ runs:
       id: check_cli
       shell: bash
       run: |
+        command -v stk
         if command -v stk &> /dev/null
         then
             echo "STK_INSTALLED=true" >> "$GITHUB_ENV"
@@ -58,6 +59,7 @@ runs:
       id: check_cli2
       shell: bash
       run: |
+        command -v stk
         if command -v stk &> /dev/null
         then
             echo "STK_INSTALLED=true" >> "$GITHUB_ENV"
