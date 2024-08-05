@@ -25,6 +25,7 @@ runs:
     - name: Check if STK CLI Installed
       id: check_cli
       shell: bash
+      continue-on-error: true
       run: |
         if command -v stk &> /dev/null
         then
