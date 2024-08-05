@@ -25,9 +25,8 @@ runs:
     - name: Check if STK CLI Installed
       id: check_cli
       shell: bash
-      continue-on-error: true
       run: |
-        if [ "$(dpkg -l | grep stk)" ]
+        if command -v stk &> /dev/null
         then
             echo "STK_INSTALLED=true" >> "$GITHUB_ENV"
         else
@@ -35,7 +34,7 @@ runs:
         fi
 
     - name: Download STK CLI
-      if: steps.output.check_cli.stk_installed == 'false'
+      if: env.STK_INSTALLED == 'true'
       shell: bash
       run: |
         curl \
@@ -49,16 +48,11 @@ runs:
           https://stk.stackspot.com/installer/linux/stk.deb
 
     - name: Install STK CLI
-      if: steps.output.check_cli.stk_installed == 'false'
+      if: env.STK_INSTALLED == 'true'
       shell: bash
       run: |
         sudo dpkg --install /tmp/stk.deb || echo "Installation failed with exit code: $?"
         export PATH=$PATH:$HOME/.stk/bin
-
-    - name: Verify if cli was installed
-      shell: bash
-      run: |
-        dpkg -l | grep stk
 
     - name: Show STK CLI version
       shell: bash
