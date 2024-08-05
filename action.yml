@@ -16,8 +16,8 @@ inputs:
     required: true
   command_stk:
     description: Command STK
-    required: true
-    default: '--version'    
+    required: false
+    default: ''
 
 runs:
   using: "composite"
