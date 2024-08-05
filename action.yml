@@ -55,7 +55,7 @@ runs:
         export PATH=$PATH:$HOME/.stk/bin
 
     - name: Check if STK CLI Installed
-      id: check_cli
+      id: check_cli2
       shell: bash
       run: |
         if command -v stk &> /dev/null
