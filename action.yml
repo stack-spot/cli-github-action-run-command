@@ -81,5 +81,5 @@ runs:
       shell: bash    
       if: ${{ failure() }}
       run: |
-        cat $HOME/.stk/logs/*
+        [ -d "$HOME/.stk/logs/" ] && [ "$(ls -A $HOME/.stk/logs/)" ] && cat $HOME/.stk/logs/*
         exit 1
