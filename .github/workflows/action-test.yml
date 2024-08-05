@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Run test action
-        uses: stack-spot/cli-github-action-run-command@main
+        uses: stack-spot/cli-github-action-run-command@add-action
         with:
           client_id: ${{ secrets.CLIENT_ID }}
           client_key: ${{ secrets.CLIENT_KEY }}
@@ -24,7 +24,7 @@ jobs:
           command_stk: "--version"
 
       - name: Run test action again
-        uses: stack-spot/cli-github-action-run-command@main
+        uses: stack-spot/cli-github-action-run-command@add-action
         with:
           client_id: ${{ secrets.CLIENT_ID }}
           client_key: ${{ secrets.CLIENT_KEY }}
