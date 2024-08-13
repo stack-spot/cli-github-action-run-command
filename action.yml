@@ -32,7 +32,7 @@ runs:
             echo "STK_INSTALLED=false" >> "$GITHUB_ENV"
         fi
 
-    - name: Download STK CLI
+    - name: Install STK CLI
       if: env.STK_INSTALLED == 'false'
       shell: bash
       run: |
@@ -40,18 +40,10 @@ runs:
           --fail \
           --http2-prior-knowledge \
           --location \
-          --output /tmp/stk.deb \
           --silent \
           --show-error \
           --tlsv1.3 \
-          https://stk.stackspot.com/installer/linux/stk.deb
-
-    - name: Install STK CLI
-      if: env.STK_INSTALLED == 'false'
-      shell: bash
-      run: |
-        sudo dpkg --install /tmp/stk.deb || echo "Installation failed with exit code: $?"
-        export PATH=$PATH:$HOME/.stk/bin
+          https://stk.stackspot.com/install.sh | bash
 
     - name: Check if STK CLI Installed
       id: check_cli2
@@ -59,13 +51,14 @@ runs:
       run: |
         if [ -f "$HOME/.stk/bin/stk" ]; then
             echo "STK_INSTALLED=true" >> "$GITHUB_ENV"
+            echo "PATH=$PATH:$HOME/.stk/bin" >> "$GITHUB_ENV
         else
             echo "STK_INSTALLED=false" >> "$GITHUB_ENV"
         fi
 
     - name: Show STK CLI version
       shell: bash
-      run: $HOME/.stk/bin/stk --version
+      run: stk --version
 
     - name: Login StackSpot
       shell: bash
@@ -74,12 +67,12 @@ runs:
         CLIENT_KEY: ${{ inputs.client_key }}
         REALM: ${{ inputs.realm }}
       run: |
-        $HOME/.stk/bin/stk login --client-id $CLIENT_ID --client-key $CLIENT_KEY --realm $REALM
+        stk login --client-id $CLIENT_ID --client-key $CLIENT_KEY --realm $REALM
 
     - name: Run Command
       shell: bash
       run: |
-        $HOME/.stk/bin/stk ${{ inputs.command_stk }}
+        stk ${{ inputs.command_stk }}
 
     - name: Show Error Log
       shell: bash    
