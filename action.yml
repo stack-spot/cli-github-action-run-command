@@ -18,6 +18,10 @@ inputs:
     description: Command STK
     required: false
     default: ''
+  working_directory:
+    description: Working directory
+    required: false
+    default: '.'    
 
 runs:
   using: "composite"
@@ -72,6 +76,7 @@ runs:
     - name: Run Command
       shell: bash
       run: |
+        cd ${{ inputs.working_directory }}
         stk ${{ inputs.command_stk }}
 
     - name: Show Error Log
