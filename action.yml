@@ -60,10 +60,6 @@ runs:
             echo "STK_INSTALLED=false" >> "$GITHUB_ENV"
         fi
 
-    - name: Show STK CLI version
-      shell: bash
-      run: stk --version
-
     - name: Login StackSpot
       shell: bash
       env:
@@ -72,6 +68,14 @@ runs:
         REALM: ${{ inputs.realm }}
       run: |
         stk login --client-id $CLIENT_ID --client-key $CLIENT_KEY --realm $REALM
+
+    - name: Upgrade CLI
+      shell: bash
+      run: stk upgrade
+
+    - name: Show STK CLI version
+      shell: bash
+      run: stk --version
 
     - name: Run Command
       shell: bash
